@@ -1,0 +1,225 @@
+USE [master]
+GO
+
+/****** Object:  Database [MonstersInc]    Script Date: 10/1/2020 12:25:42 PM ******/
+CREATE DATABASE [MonstersInc]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'MonstersInc', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\MonstersInc.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'MonstersInc_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\MonstersInc_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [MonstersInc].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [MonstersInc] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [MonstersInc] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [MonstersInc] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [MonstersInc] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [MonstersInc] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET RECOVERY SIMPLE 
+GO
+
+ALTER DATABASE [MonstersInc] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [MonstersInc] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [MonstersInc] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [MonstersInc] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [MonstersInc] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+
+ALTER DATABASE [MonstersInc] SET DELAYED_DURABILITY = DISABLED 
+GO
+
+ALTER DATABASE [MonstersInc] SET QUERY_STORE = OFF
+GO
+
+ALTER DATABASE [MonstersInc] SET  READ_WRITE 
+GO
+
+USE [MonstersInc]
+GO
+
+/****** Object:  Table [dbo].[Doors]    Script Date: 10/1/2020 12:25:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Doors](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[Energy] [real] NOT NULL,
+ CONSTRAINT [PK_Doors] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+USE [MonstersInc]
+GO
+
+/****** Object:  Table [dbo].[IntimidatorIntimidations]    Script Date: 10/1/2020 12:25:55 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[IntimidatorIntimidations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IntimidatorId] [int] NOT NULL,
+	[DoorId] [int] NOT NULL,
+	[Day] [date] NOT NULL,
+	[Depleted] [bit] NOT NULL,
+ CONSTRAINT [PK_IntimidatorWorkingDoors] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[IntimidatorIntimidations]  WITH CHECK ADD  CONSTRAINT [FK_IntimidatorWorkingDoors_DoorId_Doors_Id] FOREIGN KEY([DoorId])
+REFERENCES [dbo].[Doors] ([Id])
+GO
+
+ALTER TABLE [dbo].[IntimidatorIntimidations] CHECK CONSTRAINT [FK_IntimidatorWorkingDoors_DoorId_Doors_Id]
+GO
+
+ALTER TABLE [dbo].[IntimidatorIntimidations]  WITH CHECK ADD  CONSTRAINT [FK_IntimidatorWorkingDoors_IntimidatorId_Intimidators_Id] FOREIGN KEY([IntimidatorId])
+REFERENCES [dbo].[Intimidators] ([Id])
+GO
+
+ALTER TABLE [dbo].[IntimidatorIntimidations] CHECK CONSTRAINT [FK_IntimidatorWorkingDoors_IntimidatorId_Intimidators_Id]
+GO
+
+
+USE [MonstersInc]
+GO
+
+/****** Object:  Table [dbo].[Intimidators]    Script Date: 10/1/2020 12:26:04 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Intimidators](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](100) NULL,
+	[LastName] [nvarchar](100) NULL,
+	[PhoneNumber] [nvarchar](20) NULL,
+	[TentaclesNumber] [int] NOT NULL,
+	[StartToScareData] [datetime2](7) NOT NULL,
+	[ClientId] [nvarchar](36) NOT NULL,
+	[ClientSecret] [nvarchar](120) NOT NULL,
+ CONSTRAINT [PK_Intimidators] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [MonstersInc]
+GO
+
+/****** Object:  Table [dbo].[Logs]    Script Date: 10/1/2020 12:26:11 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Logs](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Time] [datetime] NOT NULL,
+	[RequestMethod] [nvarchar](100) NULL,
+	[RequestPath] [nvarchar](150) NULL,
+	[ResponseStatusCode] [int] NULL,
+	[ErrorMsg] [nvarchar](max) NULL,
+	[StackTrace] [text] NULL,
+ CONSTRAINT [PK_Log] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+
+

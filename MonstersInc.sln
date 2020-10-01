@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonstersIncData", "Monsters
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonstersIncDomain", "MonstersIncDomain\MonstersIncDomain.csproj", "{27A3C30F-6D28-4A65-BFE7-A626E7988A2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonstersInc.Tests", "MonstersInc.Tests\MonstersInc.Tests.csproj", "{506763FF-CA7E-46DF-A0BF-7D2E8655DEF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonstersInc.Tests", "MonstersInc.Tests\MonstersInc.Tests.csproj", "{506763FF-CA7E-46DF-A0BF-7D2E8655DEF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A257164F-9FED-401C-A357-52AB614254D9}"
+	ProjectSection(SolutionItems) = preProject
+		generateDB.txt = generateDB.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
