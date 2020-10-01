@@ -13,6 +13,7 @@ namespace MonstersInc
         public int TentaclesNumber { get; set; }
         public DateTime StartToScareData { get; set; }
 
-        public int GoalAccomplished { get; set; }
+        public int GoalsAccomplished { get; set; }
+        public float EnergyCollected { get; set; }
     }
 }

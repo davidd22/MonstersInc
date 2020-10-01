@@ -65,15 +65,18 @@ namespace MonstersInc.Controllers
                 if (intimidatorResult.Count > 0)
                 {
                     intimidatorResult = intimidatorResult.Where(c => c.Day >= startOfMonth && c.Day <= endOfMonth).ToList();
+                    List<IntimidatorWorkdayDto> withGoalsAccomplished = intimidatorResult.Where(g => g.GoalAccomplished).ToList();
 
-                    int goalAccomplished = intimidatorResult.Where(g => g.GoalAccomplished).Count();
 
-                    if (goalAccomplished > goalAccomplishedMax)
+                    int goalsAccomplished = withGoalsAccomplished.Count();
+
+                    if (goalsAccomplished > goalAccomplishedMax)
                     {
-                        goalAccomplishedMax = goalAccomplished;
+                        goalAccomplishedMax = goalsAccomplished;
 
                         CurrentEmployeeOfTheMonthDto dto = _mapper.Map<CurrentEmployeeOfTheMonthDto>(intimidators[i]);
-                        dto.GoalAccomplished = goalAccomplished;
+                        dto.GoalsAccomplished = goalsAccomplished;
+                        dto.EnergyCollected = withGoalsAccomplished.Sum(e => e.DailyEnergy);
 
                         employeesOfTheMonthSet.Add(dto);
                     }
