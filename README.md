@@ -2,8 +2,11 @@
 
 just a demo of .NET CORE API
 
-used :
+using  :
 
-repository pattern 
-channels 
-hosted service
+- dependency injection
+- repository pattern 
+- .net core channels 
+- hosted service
+- .net core distributed cache
+- EF6
